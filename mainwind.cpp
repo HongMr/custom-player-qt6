@@ -6,6 +6,7 @@
 #include <functional>
 #include <iostream>
 
+#include "custom_log/custom_log.h"
 
 MainWind::MainWind(QWidget *parent)
     : QMainWindow(parent)
@@ -13,6 +14,7 @@ MainWind::MainWind(QWidget *parent)
 {
     ui->setupUi(this);
 
+    CustomLog::GetTheInstance().SetLevel(Level::DEBUG);
 
 }
 

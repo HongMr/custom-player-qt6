@@ -10,6 +10,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
+
+#设置本地头文件路径，注意：子目录中的头文件通过target_include_directories 添加到${PROJECT_NAME}中
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/
+                    ${CMAKE_CURRENT_SOURCE_DIR}/${CUSTOM_LOG_INCLUDE_DIR}/
+)
+
 if(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
     message("current platform : Linux")
     set(FFMPEG_PATH "/home/xh/share/learn_test/installFFmpeg")
@@ -68,6 +74,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
                             "${CMAKE_CURRENT_SOURCE_DIR}/."
                             "${SDL2_INCLUDE_PATH}"
                             "${FFMPEG_PATH}/include"
+                            "${CMAKE_CURRENT_SOURCE_DIR}/${CUSTOM_LOG_INCLUDE_DIR}/"
                             )
 
 
@@ -76,6 +83,8 @@ target_link_directories(${PROJECT_NAME} PRIVATE
                         "${FFMPEG_PATH}/lib/")
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE custom_log)
 
 #target_link_libraries(${PROJECT_NAME} PRIVATE
 #                        "${CMAKE_CURRENT_SOURCE_DIR}/SDL2/lib/x64/SDL2.lib"
@@ -96,7 +105,8 @@ set(ADD_LIBRARIES
 
 target_link_libraries(${PROJECT_NAME} PRIVATE "${ADD_LIBRARIES}")
 
-
+#添加子目录，这样子目录中CMakeLists.txt才会被调用
+add_subdirectory(custom_log)
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
