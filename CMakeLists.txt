@@ -86,6 +86,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE custom_log)
 
+target_link_libraries(${PROJECT_NAME} PRIVATE message_queue)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE ijkmediaplayer)
+
 #target_link_libraries(${PROJECT_NAME} PRIVATE
 #                        "${CMAKE_CURRENT_SOURCE_DIR}/SDL2/lib/x64/SDL2.lib"
 #                        "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeg-4.2.1-win32-dev/lib/avformat.lib"
@@ -107,6 +111,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE "${ADD_LIBRARIES}")
 
 #添加子目录，这样子目录中CMakeLists.txt才会被调用
 add_subdirectory(custom_log)
+add_subdirectory(message_queue)
+add_subdirectory(ijkmediaplayer)
+
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

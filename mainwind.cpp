@@ -16,6 +16,7 @@ MainWind::MainWind(QWidget *parent)
 
     CustomLog::GetTheInstance().SetLevel(Level::DEBUG);
 
+    InitSignalsAndSlots();
 }
 
 MainWind::~MainWind()
@@ -23,14 +24,33 @@ MainWind::~MainWind()
     delete ui;
 }
 
-void MainWind::OnPlayOrPause()
+int MainWind::InitSignalsAndSlots()
+{
+    int ret = 0;
+    connect(ui->ctrlBarWind,&CtrlBar::SigPlayOrPause,this,&MainWind::OnPlayOrPause);
+    connect(ui->ctrlBarWind,&CtrlBar::SigStop,this,&MainWind::OnStop);
+    return ret;
+}
+
+int MainWind::message_loop(void *arg)
 {
 
+}
+
+void MainWind::OnPlayOrPause()
+{
+    LOG_DEBUG<<"play start";
+    if(!m_ijk_media_player_)
+    {
+        m_ijk_media_player_ = new IjkMediaPlayer();
+
+        m_ijk_media_player_->ijkmp_create(std::bind(&MainWind::message_loop, this, std::placeholders::_1));
+    }
 }
 
 
 
 void MainWind::OnStop()
 {
-
+    LOG_DEBUG<<"play stop";
 }
